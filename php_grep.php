@@ -7,8 +7,8 @@
  * PHP grep, Copyright (C) 2012
  */
 
-define('DEBUG', true);
-define('DEMO', true);
+define('DEBUG', false);
+define('DEMO', false);
 define('REPO', 'https://github.com/cavo789/php_grep');
 
 set_time_limit(0);
