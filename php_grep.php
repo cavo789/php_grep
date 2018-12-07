@@ -243,7 +243,7 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
                                 </ul>
                             </div>
                             <div class="col-sm">
-                                <img height="300px" src="https://raw.githubusercontent.com/cavo789/php_grep/master/images/demo.gif" alt="Demo">
+                                <img src="https://raw.githubusercontent.com/cavo789/php_grep/master/images/demo.gif" alt="Demo">
                             </div>
                         </div>
                     </div>
@@ -286,7 +286,7 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
-                                    <input class="checkbox" id="regex" name="regex" <?php echo $regex ? 'checked="checked"' : ''; ?> />
+                                    <input type="checkbox" id="regex" name="regex" <?php echo $regex ? 'checked="checked"' : ''; ?> />
                                     <label for="regex" class="control-label">Regular&nbsp;expressions</label>
                                 </div>
                             </div>
