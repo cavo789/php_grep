@@ -27,7 +27,7 @@ The script display a form that will allow you to finetune the folder to scan. Yo
 
 **Don't forget to remove the script once you've finished with it.**
 
-![PHP_Grep](result.png)
+![PHP_Grep](images/demo.gif)
 
 ## Credits
 

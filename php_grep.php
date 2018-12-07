@@ -197,9 +197,7 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
       <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8;" />
       <title>PHP-Grep</title>
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/css/theme.ice.min.css" rel="stylesheet" media="screen" />
-
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
       <style>
           .ajax_loading {display:inline-block;
             width:32px;
@@ -233,51 +231,72 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
         <div class="container">
             <div class="page-header"><h1>PHP-grep</h1></div>
             <div class="container">
+                <details>
+                    <summary>How to use?</summary>
+                    <div class="row">
+                            <div class="col-sm">
+                                <ul>
+                                    <li>Update the folder if needed, where to start the search</li>
+                                    <li>Enter the text to search for in the Expression area</li>
+                                    <li>Specify a filter like *.php (or nothing to scan all files)</li>
+                                    <li>Click on the "Start the search" button</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm">
+                                <img height="300px" src="https://raw.githubusercontent.com/cavo789/php_grep/master/images/demo.gif" alt="Demo">
+                            </div>
+                        </div>
+                    </div>
+                </details>
+                <br/>
                 <div id="intro">
-                    <p>Placez ce fichier dans le dossier que vous souhaitez scanner et complétez les champs ci-dessous pour lancer la recherche.</p>
-                    <br/>
+
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label for="path" class="col-sm-2 control-label">Dossier&nbsp;:</label>
+                            <label for="path" class="col-sm-2 control-label">Folder:</label>
                             <div class="col-sm-10">
-                                <input type="text" id="path" name="path" size="70" class="form-control"value="<?php echo $folder; ?>" />
+                                <input type="text" id="path" name="path" size="70" 
+                                    class="form-control"value="<?php echo $folder; ?>" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="query" class="col-sm-2 control-label">Expression&nbsp;:</label>
+                            <label for="query" class="col-sm-2 control-label">Expression:</label>
                             <div class="col-sm-10">
-                                <input type="text" id="query" name="query" size="70" class="form-control"placeholder="Texte que vous cherchez" value="<?php echo $query; ?>" />
+                                <input type="text" id="query" name="query" size="70" 
+                                    class="form-control"placeholder="Text you are looking for" 
+                                    value="<?php echo $query; ?>" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="filter" class="col-sm-2 control-label">Filtre sur fichiers&nbsp;:</label>
+                            <label for="filter" class="col-sm-2 control-label">Filter on files:</label>
                             <div class="col-sm-10">
-                                <input type="text" id="filter" name="filter" size="30" placeholder="Par exemple : *.php, *.css, *.js, ... ou encore * pour tous les fichiers"  class="form-control"value="<?php echo $filter; ?>" />
+                                <input type="text" id="filter" name="filter" size="30" 
+                                    placeholder="For example: *.php, *.css, *.js, ... or * for all files" 
+                                    class="form-control"value="<?php echo $filter; ?>" />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="links" name="links" <?php echo $links ? 'checked="checked"' : ''; ?> />Suivre&nbsp;les&nbsp;liens&nbsp;symboliques
-                                    </label>
+                                    <input type="checkbox" id="links" name="links" <?php echo $links ? 'checked="checked"' : ''; ?> />
+                                    <label for="links" class="control-label">Follow&nbsp;the&nbsp;symbolic&nbsp;links</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
-                                    <label>
-                                        <input class="row" type="checkbox" id="regex" name="regex" <?php echo $regex ? 'checked="checked"' : ''; ?> /> Expression&nbsp;régulière
-                                    </label>
+                                    <input class="checkbox" id="regex" name="regex" <?php echo $regex ? 'checked="checked"' : ''; ?> />
+                                    <label for="regex" class="control-label">Regular&nbsp;expressions</label>
                                 </div>
                             </div>
                         </div>
                     </form>
 
                     <div class="row">
-                        <button type="button" id="btnDoIt" class="btn btn-primary">Démarre la recherche</button>
-                        <button type="button" id="btnKillMe" class="btn btn-danger pull-right" style="margin-left:10px;">Supprimer ce script</button>
+                        <button type="button" id="btnDoIt" class="btn btn-primary">Start the search</button>
+                        <button type="button" id="btnKillMe" class="btn btn-danger pull-right" style="margin-left:10px;">
+                            Remove this script</button>
                     </div>
 
                     <br/>
@@ -286,9 +305,8 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
                 <div id="Result">&nbsp;</div>
             </div>
         </div>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.3/js/jquery.tablesorter.combined.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <script type="text/javascript">
 
             $('#btnDoIt').click(function(e)  {
