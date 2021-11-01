@@ -1,6 +1,6 @@
-![Banner](images/banner.jpg)
-
 # php_grep
+
+![Banner](./banner.svg)
 
 > This script will allow you to scan files of your website and search for a specific pattern; f.i. a word or a sentence.
 
