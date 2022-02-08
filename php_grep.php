@@ -20,7 +20,7 @@ if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 
-class aeSecureFct
+class AvontureFct
 {
     /**
      * Scan a folder recursively and list files containing a specific pattern.
@@ -49,7 +49,7 @@ class aeSecureFct
             }
 
             if (is_dir($file_path)) {
-                $tmp = aeSecureFct::php_grep($file_path, $query, $filter, $links, $regex);
+                $tmp = AvontureFct::php_grep($file_path, $query, $filter, $links, $regex);
                 if (!empty($tmp)) {
                     $ret = array_merge($ret, $tmp);
                 }
@@ -115,7 +115,7 @@ if ($data !== []) {
                 $results = '';
 
                 if ('' !== $query) {
-                    $results = json_encode(aeSecureFct::php_grep($folder, $query, $filter, $links, $regex));
+                    $results = json_encode(AvontureFct::php_grep($folder, $query, $filter, $links, $regex));
                 }
 
                 header('Content-Type: text/json');
@@ -165,8 +165,8 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
       <title>PHP-Grep</title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
       <style>
-        body { 
-              margin-top: 25px; 
+        body {
+              margin-top: 25px;
         }
 
         * {
@@ -213,30 +213,30 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
                         <div class="form-group">
                             <label for="path" class="col-sm-2 control-label">Folder:</label>
                             <div class="col-sm-10">
-                                <input type="text" name="path" size="70" class="form-control" 
+                                <input type="text" name="path" size="70" class="form-control"
                                 v-model="folder" @change="doReset" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="query" class="col-sm-2 control-label">Expression:</label>
                             <div class="col-sm-10">
-                                <input type="text" id="query" name="query" size="70" 
-                                    class="form-control" placeholder="Text you are looking for" 
+                                <input type="text" id="query" name="query" size="70"
+                                    class="form-control" placeholder="Text you are looking for"
                                     v-model="query" @keydown="doReset" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="filter" class="col-sm-2 control-label">Filter on files:</label>
                             <div class="col-sm-10">
-                                <input type="text" id="filter" name="filter" size="30" 
-                                    placeholder="For example: *.php, *.css, *.js, ... or * for all files" 
+                                <input type="text" id="filter" name="filter" size="30"
+                                    placeholder="For example: *.php, *.css, *.js, ... or * for all files"
                                     class="form-control" v-model="filter" @change="doReset" />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
-                                    <input type="checkbox" id="links" name="links" 
+                                    <input type="checkbox" id="links" name="links"
                                         v-model="links" @change="doReset" />
                                     <label for="links" class="control-label">Follow&nbsp;the&nbsp;symbolic&nbsp;links</label>
                                 </div>
@@ -245,7 +245,7 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
-                                    <input type="checkbox" id="regex" name="regex" 
+                                    <input type="checkbox" id="regex" name="regex"
                                         v-model="regex" @change="doReset" />
                                     <label for="regex" class="control-label">Regular&nbsp;expressions</label>
                                 </div>
@@ -272,7 +272,7 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
                 </h2>
 
                 <div v-if="noResult">
-                    <p>No occurrence of <strong>{{ query }}</strong> has been found in folder 
+                    <p>No occurrence of <strong>{{ query }}</strong> has been found in folder
                         <strong>{{ folder }}</strong> (sub-folders included).</p>
                 </div>
 
@@ -280,7 +280,7 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
 
             </div>
         </div>
-        <script src="https://unpkg.com/vue"></script>
+        <script src="https://unpkg.com/vue@2"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script type="text/javascript">
 
@@ -304,7 +304,7 @@ if (is_file($cat = __DIR__ . DIRECTORY_SEPARATOR . 'octocat.tmpl')) {
             });
 
             Vue.component('file', {
-                template: 
+                template:
                     `<li><slot></slot></li>`
             });
 
