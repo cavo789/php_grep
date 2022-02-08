@@ -86,7 +86,7 @@ $default = str_replace('/', DS, dirname($_SERVER['SCRIPT_FILENAME']));
 $folder = $default;
 
 if ($data !== []) {
-    $task = trim(filter_var(($data['task'] ?? ''), FILTER_SANITIZE_STRING));
+    $task = trim(filter_var(($data['task'] ?? ''), FILTER_UNSAFE_RAW));
 
     if (in_array($task, ['doSearch', 'doKill'])) {
         switch ($task) {
@@ -94,23 +94,23 @@ if ($data !== []) {
                 // Get parameters
 
                 // Folder where to start the scan
-                $folder = rtrim(base64_decode(filter_var(($data['folder'] ?? $default), FILTER_SANITIZE_STRING)), DS) . DS;
+                $folder = rtrim(base64_decode(filter_var(($data['folder'] ?? $default), FILTER_UNSAFE_RAW)), DS) . DS;
 
                 // String to search
-                $query = trim(base64_decode(filter_var(($data['query'] ?? ''), FILTER_SANITIZE_STRING)));
+                $query = trim(base64_decode(filter_var(($data['query'] ?? ''), FILTER_UNSAFE_RAW)));
 
                 // Filter for file's restriction (like *.php)
-                $filter = trim(base64_decode(filter_var(($data['filter'] ?? ''), FILTER_SANITIZE_STRING)));
+                $filter = trim(base64_decode(filter_var(($data['filter'] ?? ''), FILTER_UNSAFE_RAW)));
 
                 if ('' == $filter) {
                     $filter = '*';
                 }
 
                 // Follow symbolic links or not (boolean)
-                $links = boolval(trim(filter_var(($data['links'] ?? ''), FILTER_SANITIZE_STRING)));
+                $links = boolval(trim(filter_var(($data['links'] ?? ''), FILTER_UNSAFE_RAW)));
 
                 // is the $query parameter contains a regular expression or not (boolean)
-                $regex = boolval(trim(filter_var(($data['regex'] ?? ''), FILTER_SANITIZE_STRING)));
+                $regex = boolval(trim(filter_var(($data['regex'] ?? ''), FILTER_UNSAFE_RAW)));
 
                 $results = '';
 
