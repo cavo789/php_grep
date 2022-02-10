@@ -28,12 +28,6 @@ class AvontureFct
     /**
      * Scan a folder recursively and list files containing a specific pattern.
      *
-     * $folder  Mandatory : Folder where to start the search
-     * $query   Mandatory : String to search
-     * $filter  Optional : Filter for file's restriction (like *.php)
-     * $links   True/False = follow symbolic links or not
-     * $regex   True/False = is the $query parameter contains a regular expression or not
-     *
      * @param string $folder The folder where the search should be made (f.i. `/var/www/html`)
      * @param string $query  The pattern to retrieve (f.i. `base64_decode`)
      * @param string $filter The file's filter (like ´*.php`)
