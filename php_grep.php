@@ -7,7 +7,9 @@
  * PHP grep, Copyright (C) 2012
  *
  * Last mod:
- * 2019-01-04 - Abandonment of jQuery and migration to vue.js
+ * 2019-01-04 - Abandonment of jQuery and migration to VueJs
+ * 2022-02-08 - Force VueJs v2 (since v3 is now the default)
+ * 2022-02-10 - Add a try-catch to avoid fatal error when trying to read huge files
  */
 
 define('DEBUG', false);
@@ -15,6 +17,7 @@ define('DEMO', false);
 define('REPO', 'https://github.com/cavo789/php_grep');
 
 set_time_limit(0);
+
 
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
@@ -31,15 +34,18 @@ class AvontureFct
      * $links   True/False = follow symbolic links or not
      * $regex   True/False = is the $query parameter contains a regular expression or not
      *
-     * @param mixed $folder
-     * @param mixed $query
-     * @param mixed $filter
-     * @param mixed $links
-     * @param mixed $regex
+     * @param string $folder The folder where the search should be made (f.i. `/var/www/html`)
+     * @param string $query  The pattern to retrieve (f.i. `base64_decode`)
+     * @param string $filter The file's filter (like ´*.php`)
+     * @param bool $links Should we follow symbolic links or not?
+     * @param bool $regex Is the query is a regex or not?
+     *
+     * @return array The list of files where the $query has been retrieved
      */
-    public static function php_grep($folder, $query, $filter, $links, $regex)
+    public static function php_grep(string $folder, string $query, string $filter, bool $links, bool $regex): array
     {
         $fp  = opendir($folder);
+
         $ret = [];
 
         while (false !== ($f = readdir($fp))) {
@@ -49,12 +55,21 @@ class AvontureFct
             }
 
             if (is_dir($file_path)) {
+                // Recursive call since we've found a subdirectory
                 $tmp = AvontureFct::php_grep($file_path, $query, $filter, $links, $regex);
                 if (!empty($tmp)) {
                     $ret = array_merge($ret, $tmp);
                 }
-            } elseif ($regex ? preg_match($query, file_get_contents($file_path)) : stristr(file_get_contents($file_path), $query)) {
-                $ret[] = htmlspecialchars($file_path);
+                continue;
+            }
+
+            try {
+                // We've found a file, try to read it and find the pattern in it
+                if ($regex ? preg_match($query, file_get_contents($file_path)) : stristr(file_get_contents($file_path), $query)) {
+                    $ret[] = htmlspecialchars($file_path);
+                }
+            } catch (\Exception $exception) {
+                $ret[] = "ERROR - " & htmlspecialchars($file_path) . " - Exception met : " . $exception->getMessage();
             }
         }
 
@@ -75,6 +90,9 @@ if (DEBUG === true) {
 } else {
     ini_set('error_reporting', E_ALL & ~E_NOTICE);
 }
+
+// Try to, if required, allocate the max allowed memory to this script.
+ini_set('memory_limit', -1);
 
 // Retrieve posted data
 $data = json_decode(file_get_contents('php://input'), true);
